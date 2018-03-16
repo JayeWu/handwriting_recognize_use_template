@@ -1,0 +1,15 @@
+{
+  "batch_size": 128,
+  "test_size": 300,
+  "learning_rate": 0.001,
+  "n_layer": 3,
+  "exp_name": "image_classfication",
+  "train_data_dir": "data/train2.tfrecords",
+  "test_data_dir": "data/test2.tfrecords",
+  "log_dir": "./logpath",
+  "image_size": [28,28],
+  "label_size": 10,
+  "max_to_keep":5,
+  "num_epochs": 10,
+  "num_iter_per_epoch": 20
+}

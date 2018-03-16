@@ -19,6 +19,7 @@ class IMCModel(BaseModel):
         self.y = tf.placeholder("float", [None, self.config.label_size],
                            name="Y")  # placeholder for model output (prediction)
         self.py_x = self.model()  # 构建网络模型, 输出为py_x
+        predict_op = tf.argmax(self.py_x, 1, name="predict_op")  # 预测的结果，为py_x的最大位置
         self.cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=self.py_x, labels=self.y))  # 代价函数
         correct_prediction = tf.equal(tf.argmax(self.py_x, 1), tf.argmax(self.y, 1))
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
@@ -58,7 +59,7 @@ class IMCModel(BaseModel):
         w_o = init_weights([self.params.output_dimension, self.config.label_size])
         lo = tf.nn.relu(tf.matmul(lb, w2))
         lo = tf.nn.dropout(lo, self.p_keep_hidden)
-        pyx = tf.matmul(lo, w_o)
+        pyx = tf.matmul(lo, w_o, name="py_x")
         return pyx
 
     class Params:
@@ -76,16 +77,17 @@ class IMCModel(BaseModel):
             self.rnn_hidden_units = 128  # rnn hidden layer units
 
         def input_params(self):
-            while 1:
-                cr = input("please choose CNN or RNN (cnn/rnn, default cnn): ")
-                if cr != '':
-                    if cr != 'rnn' and cr != 'cnn':
-                        print("wrong input! ")
-                    else:
-                        self.model_type = cr
-                        break
-                else:
-                    break
+            # while 1:
+            #     cr = input("please choose CNN or RNN (cnn/rnn, default cnn): ")
+            #     if cr != '':
+            #         if cr != 'rnn' and cr != 'cnn':
+            #             print("wrong input! ")
+            #         else:
+            #             self.model_type = cr
+            #             break
+            #     else:
+            #         break
+
             if self.model_type == 'cnn':
                 f = input_num("please enter the number of convolution layer (3): ")
                 if f != "":

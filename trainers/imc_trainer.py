@@ -1,6 +1,10 @@
 from base.base_train import BaseTrain
 from tqdm import tqdm
 import numpy as np
+from PIL import Image
+from tensorflow.python.platform import gfile
+import os
+import tensorflow as tf
 
 
 class IMCTrainer(BaseTrain):
@@ -44,5 +48,33 @@ class IMCTrainer(BaseTrain):
                                      feed_dict=feed_dict)
 
         return loss, acc
+
+    def recognize(self):
+        # 手写图片预处理
+        dir_af = "test_num"
+        with self.sess as sess:
+            # 开始识别图片
+            files = os.listdir(dir_af)
+            cnt = len(files)
+            correct = 0
+            for i in range(cnt):
+                actual_label = int(files[i][0])
+                files[i] = dir_af + "/" + files[i]
+                img = Image.open(files[i])  # 读取要识别的图片
+                print("input: ", files[i])
+                imga = np.array(img).reshape(-1, self.config.image_size[0], self.config.image_size[1], 1)
+                # feed 数据给 张量predict_op
+                predict_op = tf.argmax(self.model.py_x, 1, name="predict_op")
+                prediction = predict_op.eval(feed_dict={self.model.x: imga, self.model.p_keep_conv: 1.0, self.model.p_keep_hidden: 1.0})
+                # 输出
+                print("output: ", prediction)
+                if prediction == actual_label:
+                    print("Correct!")
+                    correct = correct + 1
+                else:
+                    print("Wrong!")
+                print("\n")
+            print("recognize finished")
+            print("Verification accuracy is %.2f" % (correct / cnt))
 
 

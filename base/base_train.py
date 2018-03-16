@@ -18,6 +18,7 @@ class BaseTrain:
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(sess=self.sess, coord=coord)  # 启动队列
         for cur_epoch in range(self.model.cur_epoch_tensor.eval(self.sess), self.config.num_epochs + 1, 1):
+            print("epoch {}".format(cur_epoch+1))
             acc = self.train_epoch()
             self.sess.run(self.model.increment_cur_epoch_tensor)
             if acc > self.config.expected_accuracy:

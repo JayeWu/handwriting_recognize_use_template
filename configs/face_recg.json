@@ -3,7 +3,6 @@
   "test_size": 300,
   "learning_rate": 0.001,
   "expected_accuracy": 0.90,
-  "n_layer": 3,
   "exp_name": "face_recognizition",
   "train_data_dir": "data/face_more_train.tfrecords",
   "test_data_dir": "data/face_more_test.tfrecords",
@@ -12,6 +11,6 @@
   "label_size": 44,
   "max_to_keep":5,
   "num_epochs": 20,
-  "num_iter_per_epoch": 20,
+  "num_iter_per_epoch": 100,
   "dir_af":"test_num"
 }

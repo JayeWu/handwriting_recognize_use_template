@@ -111,13 +111,13 @@ class IMCModel(BaseModel):
             b = input_num("please enter the size of test data (300): ")
             if b != "":
                 self.test_size = int(b)
-            c = input_num("please enter the learning rate of optimizer (0.001): ")
-            if c != "":
-                self.learning_rate = float(c)
-            d = input_num("please enter the maximal epochs of model training (10000): ")
-            if d != "":
-                self.max_epochs = int(d)
-            e = input_num("please enter the expect accuracy of model (0.99): ")
-            if e != "":
-                self.expect_accuracy = float(e)
+            # c = input_num("please enter the learning rate of optimizer (0.001): ")
+            # if c != "":
+            #     self.learning_rate = float(c)
+            # d = input_num("please enter the maximal epochs of model training (10000): ")
+            # if d != "":
+            #     self.max_epochs = int(d)
+            # e = input_num("please enter the expect accuracy of model (0.99): ")
+            # if e != "":
+            #     self.expect_accuracy = float(e)
 

@@ -13,7 +13,6 @@ from utils.utils import get_args
 from utils.logger import Logger
 
 
-
 def main():
     try:
         args = get_args()
@@ -41,7 +40,7 @@ def main():
 
     # trainer.recognize()
     recogflag = input("recognize your image now? image in {} Y/N".format(config.dir_af))
-    if recogflag == "Y" or recogflag == "y":
+    if recogflag == "Y" or recogflag == "y" or recogflag == '':
         recognize_image(config.dir_af, config.checkpoint_dir, config.graph_dir, config.image_size)
     else:
         print("Process end!")
@@ -94,7 +93,6 @@ def recognize_image(dir_af, ckpt_dir, graph_dir, image_size):
             print("\n")
         print("recognize finished")
         print("Verification accuracy is %.2f" % (correct / cnt))
-
 
 
 if __name__ == "__main__":

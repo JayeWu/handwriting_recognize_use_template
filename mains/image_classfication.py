@@ -48,6 +48,16 @@ def main():
 
 def recognize_image(dir_af, ckpt_dir, graph_dir, image_size):
     # 手写图片预处理
+    names = ["Abhishek_Bachan", "Alex_Rodriguez", "Ali_Landry", "Alyssa_Milano", "Anderson_Cooper", "Anna_Paquin",
+             "Audrey_Tautou", "Barack_Obama", "Ben_Stiller", "Christina_Ricci", "Clive_Owen", "Cristiano_Ronaldo",
+             "Daniel_Craig", "Danny_Devito", "David_Duchovny", "Denise_Richards", "Diane_Sawyer", "Donald_Faison",
+             "Ehud_Olmert", "Faith_Hill", "Famke_Janssen", "Hugh_Jackman", "Hugh_Laurie", "James_Spader", "Jared_Leto",
+             "Julia_Roberts",
+             "Julia_Stiles", "Karl_Rove", "Katherine_Heigl", "Mark_Ruffalo", "Meg_Ryan", "Michelle_Trachtenberg",
+             "Michelle_Wie", "Mickey_Rourke", "Miley_Cyrus", "Milla_Jovovich", "Nicole_Richie", "Rachael_Ray",
+             "Robert_Gates", "Ryan_Seacrest", "Sania_Mirza", "Sarah_Chalke", "Sarah_Palin", "Scarlett_Johansson",
+             ]
+
     with tf.Session() as sess:
         ''' 加载保存好的图
         如果不进行这一步，也可以按照训练模型时一样的定义需要的张量
@@ -76,7 +86,11 @@ def recognize_image(dir_af, ckpt_dir, graph_dir, image_size):
         cnt = len(files)
         correct = 0
         for i in range(cnt):
-            actual_label = int(files[i][0])
+            if dir_af == "face_image":
+                name = '_'.join(files[i].split('_')[0:2])
+                actual_label = names.index(name)
+            else:
+                actual_label = int(files[i][0])
             files[i] = dir_af + "/" + files[i]
             img = Image.open(files[i])  # 读取要识别的图片
             print("input: ", files[i])

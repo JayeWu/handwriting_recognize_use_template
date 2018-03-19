@@ -12,5 +12,5 @@
   "max_to_keep":5,
   "num_epochs": 20,
   "num_iter_per_epoch": 100,
-  "dir_af":"test_num"
+  "dir_af":"face_image"
 }

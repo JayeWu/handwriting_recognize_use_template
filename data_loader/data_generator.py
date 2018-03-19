@@ -50,3 +50,5 @@ class DataGenerator:
     def next_batch(self, sess):
         yield sess.run([self.image_batch, self.label_batch])
 
+    def next_batch_test(self, sess):
+        yield sess.run([self.image_batch_test, self.label_batch_test])

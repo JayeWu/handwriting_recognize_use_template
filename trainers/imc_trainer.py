@@ -46,8 +46,11 @@ class IMCTrainer(BaseTrain):
         feed_dict = {self.model.x: batch_xs, self.model.y: batch_ys, self.model.is_training: True,  self.model.p_keep_conv: 0.8, self.model.p_keep_hidden: 0.5}
         _, loss, acc = self.sess.run([self.model.train_op, self.model.cross_entropy, self.model.accuracy],
                                      feed_dict=feed_dict)
-
-        return loss, acc
+        tex, tey = next(self.data.next_batch_test(self.sess))  # 取出测试数据
+        tex = tex.reshape(-1, self.config.image_size[0], self.config.image_size[1], 1)
+        accuracy = np.mean(np.argmax(tey, axis=1) ==
+                           self.sess.run(self.model.predict_op, feed_dict={self.model.x: tex, self.model.p_keep_conv: 1.0, self.model.p_keep_hidden: 1.0}))
+        return loss, accuracy
 
     def recognize(self):
         # 手写图片预处理
